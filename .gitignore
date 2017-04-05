@@ -5,7 +5,7 @@
 /deps
 /*.ez
 /.fetch
-/*.swp
+*.swp
 
 # Generate on crash by the VM
 erl_crash.dump
