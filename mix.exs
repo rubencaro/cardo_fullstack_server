@@ -3,15 +3,15 @@ defmodule Cardo.Mixfile do
 
   def project do
     [app: :cardo,
-     version: "0.1.0",
+     version: get_version_number(),
      elixir: "~> 1.4",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps()]
+     deps: deps(),
+     test_coverage: [tool: Cardo.Helpers.Cover, verbose: false, ignored: []],
+     aliases: aliases()]
   end
 
-  # Configuration for the OTP application
-  #
   # Type "mix help compile.app" for more information
   def application do
     # Specify extra applications you'll use from Erlang/Elixir
@@ -19,16 +19,28 @@ defmodule Cardo.Mixfile do
      mod: {Cardo.Application, []}]
   end
 
-  # Dependencies can be Hex packages:
-  #
-  #   {:my_dep, "~> 0.3.0"}
-  #
-  # Or git/path repositories:
-  #
-  #   {:my_dep, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
-  #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [
+      {:cowboy, "~> 1.1"},
+      {:plug, "~> 1.3"},
+      {:credo, "~> 0.7", only: [:dev, :test]}
+    ]
   end
+
+  # Get version number based on git commit
+  #
+  defp get_version_number do
+    commit = :os.cmd('git rev-parse --short HEAD') |> to_string |> String.rstrip(?\n)
+    v = "0.1.0+#{commit}"
+    case Mix.env do
+      :dev -> v <> "dev"
+      _ -> v
+    end
+  end
+
+  defp aliases do
+    [test: ["test --cover"]]
+  end
+
 end
