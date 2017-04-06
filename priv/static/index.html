@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+  <head>
+  </head>
+  <body>
+    <input id="entry" type="text" placeholder="Type here"/>
+    <button onclick="send();"> Send </button>
+    <button onclick="connect();"> Connect </button>
+    <script>
+      var onMessage = function(msg){
+        console.log(msg);
+      }
+
+      var connect = function(){
+        var sse = new EventSource("/sse");
+        sse.onmessage = onMessage;
+      }
+
+      var send = function(){
+        var body = {"msg": document.getElementById("entry").value};
+        fetch("/entry", {
+          "method": "POST", 
+          "headers": {"content-type": "application/json"}, 
+          "body": JSON.stringify(body)
+        });
+      };
+    </script>
+  </body>
+</html>
