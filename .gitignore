@@ -26,3 +26,7 @@ erl_crash.dump
 /log
 /data
 /doc
+
+# js stuff
+/node_modules
+
