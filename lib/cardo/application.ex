@@ -1,6 +1,4 @@
 defmodule Cardo.Application do
-  # See http://elixir-lang.org/docs/stable/elixir/Application.html
-  # for more information on OTP Applications
   @moduledoc false
 
   use Application
@@ -8,14 +6,34 @@ defmodule Cardo.Application do
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
-    # Define workers and child supervisors to be supervised
+    greeting()
+
     children = [
       Plug.Adapters.Cowboy.child_spec(:http, Cardo.Router, [], [port: 4001, acceptors: 5])
     ]
 
-    # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
-    # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Cardo.Supervisor]
     Supervisor.start_link(children, opts)
+  end
+
+  defp greeting do
+    [:bright, :green, """
+
+
+ ▄████▄   ▄▄▄       ██▀███  ▓█████▄  ▒█████
+▒██▀ ▀█  ▒████▄    ▓██ ▒ ██▒▒██▀ ██▌▒██▒  ██▒
+▒▓█    ▄ ▒██  ▀█▄  ▓██ ░▄█ ▒░██   █▌▒██░  ██▒
+▒▓▓▄ ▄██▒░██▄▄▄▄██ ▒██▀▀█▄  ░▓█▄   ▌▒██   ██░
+▒ ▓███▀ ░ ▓█   ▓██▒░██▓ ▒██▒░▒████▓ ░ ████▓▒░
+░ ░▒ ▒  ░ ▒▒   ▓▒█░░ ▒▓ ░▒▓░ ▒▒▓  ▒ ░ ▒░▒░▒░
+  ░  ▒     ▒   ▒▒ ░  ░▒ ░ ▒░ ░ ▒  ▒   ░ ▒ ▒░
+░          ░   ▒     ░░   ░  ░ ░  ░ ░ ░ ░ ▒
+░ ░            ░  ░   ░        ░        ░ ░
+░                            ░
+
+
+""", :reset,
+      " is listening on port ", :bright, "4001...\n\n", :reset]
+    |> IO.ANSI.format |> IO.puts
   end
 end

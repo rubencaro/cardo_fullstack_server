@@ -1,4 +1,5 @@
 require Cardo.Helpers, as: H
+alias Cardo.Controller
 
 defmodule Cardo.Router do
   use Plug.Router
@@ -19,15 +20,14 @@ defmodule Cardo.Router do
   plug :dispatch
 
   post "/entry" do
-    Cardo.Card.create(conn.params)
-    send_resp(conn, 200, "")
+    Controller.save_entry(conn)
   end
 
   get "/sse" do
     conn
     |> put_resp_header("content-type", "text/event-stream")
     |> send_chunked(200)
-    |> sse_loop
+    |> Controller.sse_loop
   end
 
   match _ do
@@ -38,20 +38,4 @@ defmodule Cardo.Router do
     H.spit conn
     send_resp(conn, conn.status, "Something went wrong")
   end
-
-  defp sse_loop(%Plug.Conn{} = conn) do
-    case get_one_card() do
-      nil -> :timer.sleep(1000)
-      card ->
-        send_data(conn, card.doc._data)
-        destroy_card(card)
-    end
-    sse_loop(conn)
-  end
-
-  defp send_data(%Plug.Conn{} = conn, data) do
-    msg = ~s|event: "message"\n\ndata: #{Poison.encode!(data)}\n\n|
-    chunk(conn, msg)
-  end
-
 end

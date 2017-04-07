@@ -1,0 +1,7 @@
+use Mix.Config
+
+config :xarango, :db,
+       server: "http://localhost:8529",
+       database: "test_db",
+       username: "user",
+       password: "pass"

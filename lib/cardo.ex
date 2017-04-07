@@ -1,18 +1,7 @@
 defmodule Cardo do
   @moduledoc """
   Documentation for Cardo.
+
+  See `README.md`.
   """
-
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Cardo.hello
-      :world
-
-  """
-  def hello do
-    :world
-  end
 end

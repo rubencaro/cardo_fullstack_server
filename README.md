@@ -1,19 +1,14 @@
 # Cardo
 
-**TODO: Add description**
+A card manager.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `cardo` to your list of dependencies in `mix.exs`:
+* Install ArangoDB. Remember to run `arango-secure-installation` to setup `root` credentials.
+* `mix deps.get`
+* Put your ArangoDB credentials on `private.exs`
 
-```elixir
-def deps do
-  [{:cardo, "~> 0.1.0"}]
-end
-```
+## Development
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/cardo](https://hexdocs.pm/cardo).
+* Run `mix run --no-halt` to start, or `iex -S mix` to get an interactive server.
 
