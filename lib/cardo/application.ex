@@ -6,7 +6,7 @@ defmodule Cardo.Application do
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
-    greeting()
+    greeting(Mix.env)
 
     children = [
       Plug.Adapters.Cowboy.child_spec(:http, Cardo.Router, [], [port: 4001, acceptors: 5])
@@ -16,7 +16,8 @@ defmodule Cardo.Application do
     Supervisor.start_link(children, opts)
   end
 
-  defp greeting do
+  defp greeting(:test), do: :ok
+  defp greeting(_) do
     [:bright, :green, """
 
 

@@ -423,4 +423,46 @@ defmodule Cardo.Helpers do
   """
   def label(thing, label \\ :ok), do: {label, thing}
 
+  @doc """
+  Wait for given function to return true.
+  Optional `msecs` and `step`.
+  Be aware that exceptions raised and thrown messages by given `func` will be discarded.
+  """
+  def wait_for(func, msecs \\ 5_000, step \\ 100) do
+    res = try do
+      func.()
+    rescue
+      _ -> nil
+    catch
+      :exit, _ -> nil
+    end
+
+    if res do
+      res
+    else
+      if msecs <= 0, do: raise "Timeout!"
+      :timer.sleep step
+      wait_for func, msecs - step, step
+    end
+  end
+
+  @doc """
+  Return an integer represented by the given string,
+  or `nil` if not recognised.
+
+      iex> Cardo.Helpers.parse_integer("3") || -1
+      3
+      iex> Cardo.Helpers.parse_integer("bla") || -1
+      -1
+
+  """
+  def parse_integer(s) when is_binary(s) do
+    case Integer.parse(s) do
+      :error -> nil
+      {i, _} -> i
+    end
+  end
+  def parse_integer(i) when is_integer(i), do: i
+  def parse_integer(_), do: nil
+
 end
