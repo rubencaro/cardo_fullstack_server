@@ -15,9 +15,12 @@ defmodule Cardo.Mixfile do
   # Type "mix help compile.app" for more information
   def application do
     # Specify extra applications you'll use from Erlang/Elixir
-    [extra_applications: [:logger, :cowboy, :plug, :xarango],
+    [extra_applications: apps(Mix.env),
      mod: {Cardo.Application, []}]
   end
+
+  defp apps(:dev), do: apps(:prod) ++ [:reprise]
+  defp apps(_), do: [:logger, :cowboy, :plug, :xarango]
 
   # Type "mix help deps" for more examples and options
   defp deps do
@@ -26,7 +29,8 @@ defmodule Cardo.Mixfile do
       {:plug, "~> 1.3"},
       {:poison, "~> 3.1"},
       {:xarango, "~> 0.4"},
-      {:credo, "~> 0.7", only: [:dev, :test]}
+      {:credo, "~> 0.7", only: [:dev, :test]},
+      {:reprise, "~> 0.5", only: :dev}
     ]
   end
 
