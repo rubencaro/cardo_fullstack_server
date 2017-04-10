@@ -1,21 +1,20 @@
 <template>
   <div id="log">
-    <ul v-for="line in lines">
+    <ul v-for="line in logs">
       <li>{{ line }}</li>
     </ul>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'Log',
-  data: () => {
-    return {
-      lines: ["Logger ready."]
-    }
-  }
+  computed: mapGetters(['logs'])
 }
 </script>
 
 <style>
+
 </style>
