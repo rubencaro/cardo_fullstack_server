@@ -1,0 +1,25 @@
+{
+  "main": "../priv/static/app.js",
+  "scripts": {
+    "build": "node_modules/brunch/bin/brunch b",
+    "watch": "node_modules/brunch/bin/brunch w",
+    "serve": "node_modules/brunch/bin/brunch w --server"
+  },
+  "dependencies": {
+    "axios": "^0.16.1",
+    "store": "^2.0.4",
+    "vue": "^2.2.6",
+    "vue-router": "^2.3.1",
+    "vuex": "^2.2.1"
+  },
+  "devDependencies": {
+    "babel-brunch": "^6.1.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-es2016": "^6.24.1",
+    "babel-preset-latest": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
+    "brunch": "^2.10.9",
+    "vue-brunch": "^2.0.1"
+  }
+}

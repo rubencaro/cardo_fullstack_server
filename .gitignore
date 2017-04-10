@@ -28,5 +28,9 @@ erl_crash.dump
 /doc
 
 # js stuff
-/node_modules
+/front/node_modules
 
+# dynamic front stuff
+/priv/static/*.map
+/priv/static/*.js
+/priv/static/*.css
