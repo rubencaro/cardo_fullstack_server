@@ -17,7 +17,7 @@ export default {
   components: {
     'log': Log
   },
-  computed: mapGetters(['messages'])
+  computed: {...mapGetters(['messages'])}
 }
 </script>
 

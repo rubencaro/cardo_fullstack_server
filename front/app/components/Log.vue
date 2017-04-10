@@ -11,7 +11,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'Log',
-  computed: mapGetters(['logs'])
+  computed: {...mapGetters(['logs'])}
 }
 </script>
 
