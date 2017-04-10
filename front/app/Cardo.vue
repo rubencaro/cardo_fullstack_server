@@ -1,23 +1,22 @@
 <template>
   <div class="container">
     <h1>Cardo</h1>
-    <div v-for="message in messages">
-      <p>{{ message }}</p>
-    </div>
+    <messages></messages>
     <log></log>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import Log from './components/Log'
+import Messages from './components/Messages'
 
 export default {
   name: 'Cardo',
   components: {
-    'log': Log
-  },
-  computed: {...mapGetters(['messages'])}
+    'log': Log,
+    'messages': Messages
+  }
 }
 </script>
 

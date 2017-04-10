@@ -17,11 +17,32 @@ const getters = {
   }
 }
 
+const mutations = {
+  addMessage(state, message) {
+    state.messages.push(message)
+  },
+  addLogLine(state, text) {
+    state.logs.push(text)
+  }
+}
+
+const actions = {
+  addMessage(context, text) {
+    context.commit('addMessage', text)
+  },
+  addLogLine(context, text) {
+    const formatted = `${Date.now()}: ${text}`
+    context.commit('addLogLine', formatted)
+  }
+}
+
 export default new Vuex.Store({
   state,
-  // actions,
+  actions,
   getters,
+  mutations,
   // modules: {
   //   card
   // }
+  strict: process.env.NODE_ENV !== 'production'
 })
