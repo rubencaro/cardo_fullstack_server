@@ -33,6 +33,33 @@ const actions = {
   addLogLine(context, text) {
     const formatted = `${Date.now()}: ${text}`
     context.commit('addLogLine', formatted)
+  },
+  receiveData(context, data) {
+    context.dispatch('addMessage', data)
+    context.dispatch('addLogLine', data)
+  }
+}
+
+const outboundData = store => {
+  // called when the store is initialized
+  store.subscribe((mutation, state) => {
+    // called after every mutation.
+    // The mutation comes in the format of { type, payload }.
+    console.log(mutation)
+    if (mutation.type == "addMessage") {
+      fetch("/entry", {
+        "method": "POST",
+        "headers": { "content-type": "application/json" },
+        "body": JSON.stringify(mutation.payload)
+      });
+    }
+  })
+}
+
+const inboundData = store => {
+  const sse = new EventSource("/sse")
+  sse.onmessage = data => {
+    store.dispatch('receiveData', data)
   }
 }
 
@@ -44,5 +71,6 @@ export default new Vuex.Store({
   // modules: {
   //   card
   // }
+  plugins: [outboundData, inboundData],
   strict: process.env.NODE_ENV !== 'production'
 })

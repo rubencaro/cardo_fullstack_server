@@ -1,6 +1,7 @@
 alias Plug.Conn
 alias Cardo.Card
 require Cardo.Helpers, as: H
+require Logger
 
 defmodule Cardo.Controller do
   @moduledoc """
@@ -48,6 +49,7 @@ defmodule Cardo.Controller do
         conn
       card ->
         conn = send_data(conn, card.doc._data)
+        Logger.info("Sent #{card.doc._data}")
         Card.destroy(card)
         conn
     end
