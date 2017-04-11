@@ -5,6 +5,7 @@
 /deps
 /*.ez
 /.fetch
+/.vscode
 *.swp
 
 # Generate on crash by the VM

@@ -4,8 +4,8 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 const state = {
-  messages: ['some', 'messages'],
-  logs: ['Logger is ready']
+  messages: [],
+  logs: []
 }
 
 const getters = {
@@ -19,6 +19,9 @@ const getters = {
 
 const mutations = {
   addMessage(state, message) {
+    state.messages.push(message)
+  },
+  checkinMessage(state, message) {
     state.messages.push(message)
   },
   addLogLine(state, text) {
@@ -35,7 +38,8 @@ const actions = {
     context.commit('addLogLine', formatted)
   },
   receiveData(context, data) {
-    context.dispatch('addMessage', data)
+    console.log(`Received: ${data}`)
+    context.commit('checkinMessage', data)
     context.dispatch('addLogLine', data)
   }
 }
@@ -45,8 +49,8 @@ const outboundData = store => {
   store.subscribe((mutation, state) => {
     // called after every mutation.
     // The mutation comes in the format of { type, payload }.
-    console.log(mutation)
     if (mutation.type == "addMessage") {
+      console.log(mutation)
       fetch("/entry", {
         "method": "POST",
         "headers": { "content-type": "application/json" },
@@ -58,8 +62,15 @@ const outboundData = store => {
 
 const inboundData = store => {
   const sse = new EventSource("/sse")
-  sse.onmessage = data => {
-    store.dispatch('receiveData', data)
+  sse.onmessage = e => {
+    console.log("Receiving data")
+    store.dispatch('receiveData', JSON.parse(e.data)._json)
+  }
+  sse.onerror = () => {
+    console.log("EventSource failed.")
+  }
+  sse.onopen = () => {
+    console.log("EventSource opened.")
   }
 }
 

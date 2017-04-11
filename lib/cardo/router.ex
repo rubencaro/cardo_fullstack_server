@@ -26,6 +26,7 @@ defmodule Cardo.Router do
   get "/sse" do
     conn
     |> put_resp_header("content-type", "text/event-stream")
+    |> put_resp_header("connection", "keep-alive")
     |> send_chunked(200)
     |> Controller.sse_loop
   end

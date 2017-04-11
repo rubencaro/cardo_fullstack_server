@@ -9,7 +9,9 @@ defmodule Cardo.Application do
     greeting(Mix.env)
 
     children = [
-      Plug.Adapters.Cowboy.child_spec(:http, Cardo.Router, [], [port: 4001, acceptors: 5])
+      Plug.Adapters.Cowboy.child_spec(:http, Cardo.Router, [],
+                          [port: 4001, acceptors: 5,
+                           protocol_options: [max_keepalive: :infinity]])
     ]
 
     opts = [strategy: :one_for_one, name: Cardo.Supervisor]

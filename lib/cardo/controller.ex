@@ -49,7 +49,6 @@ defmodule Cardo.Controller do
         conn
       card ->
         conn = send_data(conn, card.doc._data)
-        Logger.info("Sent #{card.doc._data}")
         Card.destroy(card)
         conn
     end
@@ -57,6 +56,7 @@ defmodule Cardo.Controller do
 
   defp send_data(%Conn{} = conn, data) do
     msg = ~s|event: "message"\n\ndata: #{Poison.encode!(data)}\n\n|
+    Logger.info("Sent #{msg}")
     {:ok, conn} = Conn.chunk(conn, msg)
     conn
   end
@@ -66,6 +66,7 @@ defmodule Cardo.Controller do
   Returns a 200 or a 500 response based on feedback from db.
   """
   def save_entry(%Conn{} = conn) do
+    Logger.info("Received #{inspect conn.params}")
     case Card.create(conn.params) do
       {:error, reason} ->
         Conn.send_resp(conn, 500, reason)
