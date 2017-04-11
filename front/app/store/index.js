@@ -44,44 +44,19 @@ const actions = {
   }
 }
 
-const outboundData = store => {
-  // called when the store is initialized
-  store.subscribe((mutation, state) => {
-    // called after every mutation.
-    // The mutation comes in the format of { type, payload }.
-    if (mutation.type == "addMessage") {
-      console.log(mutation)
-      fetch("/entry", {
-        "method": "POST",
-        "headers": { "content-type": "application/json" },
-        "body": JSON.stringify(mutation.payload)
-      });
-    }
-  })
-}
+import inbound from './inbound'
+import outbound from './outbound'
 
-const inboundData = store => {
-  const sse = new EventSource("/sse")
-  sse.onmessage = e => {
-    console.log("Receiving data")
-    store.dispatch('receiveData', JSON.parse(e.data)._json)
-  }
-  sse.onerror = () => {
-    console.log("EventSource failed.")
-  }
-  sse.onopen = () => {
-    console.log("EventSource opened.")
-  }
-}
+import cards from './modules/cards'
 
 export default new Vuex.Store({
   state,
   actions,
   getters,
   mutations,
-  // modules: {
-  //   card
-  // }
-  plugins: [outboundData, inboundData],
+  modules: {
+    cards
+  },
+  plugins: [outbound, inbound],
   strict: process.env.NODE_ENV !== 'production'
 })
