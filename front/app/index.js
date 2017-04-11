@@ -1,5 +1,9 @@
 import Vue from 'vue'
 import store from './store'
+
+import BootstrapVue from 'bootstrap-vue'
+Vue.use(BootstrapVue)
+
 // import VueRouter from 'vue-router'
 
 // Vue.use(VueRouter)

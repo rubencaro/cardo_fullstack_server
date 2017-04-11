@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "axios": "^0.16.1",
+    "bootstrap-vue": "^0.12.1",
     "store": "^2.0.4",
     "vue": "^2.2.6",
     "vue-router": "^2.3.1",

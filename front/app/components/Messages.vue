@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input @keyup.enter="addMessage">
+    <b-form-input @keyup.enter="addMessage"/>
     <div v-for="message in messages">
       <p>{{ message }}</p>
     </div>
