@@ -1,7 +1,7 @@
 <template>
   <div>
     <ul>
-      <li v-for="card in cards">
+      <li v-for="card in cards_cards">
         <card :card="card"></card>
       </li>
     </ul>
@@ -14,7 +14,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: "Cards",
-  computed: { ...mapGetters(['cards', 'card']) },
+  computed: { ...mapGetters(['cards_cards']) },
   components: {
     'card': Card
   }

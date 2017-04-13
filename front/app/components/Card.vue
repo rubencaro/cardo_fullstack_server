@@ -2,36 +2,34 @@
   <div>
     <p>
       <b-btn @click="clicked"
-             variant="primary">Toggle Collapse</b-btn>
+             variant="secondary"
+             size="sm">+</b-btn>
       <p>{{ card.name }}</p>
     </p>
 
     <p v-if="visible">
-      <ul>
-        <li v-for="(value, key, index) in card">
-          <card-field :value="value"
-                      :field="key"></card-field>
-        </li>
-      </ul>
+      <card-field-list :card="card"></card-field-list>
       <card-input :card="card"></card-input>
     </p>
   </div>
 </template>
 
 <script>
-import CardField from './CardField'
+import CardFieldList from './CardFieldList'
 import CardInput from './CardInput'
 
 export default {
   name: "Card",
   props: ['card'],
   methods: {
-    clicked() {
+    clicked(e) {
       this.visible = !this.visible
+      if (this.visible) { e.target.textContent = '-' }
+      else { e.target.textContent = '+' }
     }
   },
   components: {
-    'card-field': CardField,
+    'card-field-list': CardFieldList,
     'card-input': CardInput
   },
   data() {  //local data
