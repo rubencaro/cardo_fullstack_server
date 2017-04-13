@@ -22,8 +22,9 @@ defmodule CardoTest do
     data = %{"test" => "data"}
     msg = ~s|event: "message"\n\ndata: #{Poison.encode!(data)}\n\n|
     Card.create(data)
-    res = H.wait_for(fn -> TH.get("/sse", loops: 5, sleep_msec: 100) end)
-    assert res.resp_body == msg
+    res = H.wait_for(fn ->
+      TH.get("/sse", loops: 5, sleep_msec: 100).resp_body == msg
+    end)
   end
 
   test "Create entry" do

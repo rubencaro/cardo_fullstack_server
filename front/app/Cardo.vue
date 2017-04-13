@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <h1>Cardo</h1>
     <cards></cards>
-    <messages></messages>
+    <!--<messages></messages>-->
     <log></log>
   </div>
 </template>
@@ -17,7 +17,7 @@ export default {
   name: 'Cardo',
   components: {
     'log': Log,
-    'messages': Messages,
+    // 'messages': Messages,
     'cards': Cards
   }
 }
