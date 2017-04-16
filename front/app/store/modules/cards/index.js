@@ -55,6 +55,14 @@ const actions = {
   cards_addCard(context, card) {
     context.commit('cards_addCard', card)
   },
+  cards_removeField(context, payload) {
+    if (payload.field == "id") {
+      context.dispatch('alerts_addError', { msg: `${Date.now()} Field 'id' cannot be deleted.` })
+    }
+    else {
+      context.commit('cards_removeField', payload)
+    }
+  },
   cards_upsertFieldOnCard(context, payload) {
     context.commit('cards_upsertFieldOnCard', payload)
   }
@@ -69,6 +77,9 @@ const mutations = {
     // needed to keep newly created fields reactive
     // see https://vuejs.org/v2/guide/reactivity.html
     Vue.set(state.cards.cards[card_id], field, value)
+  },
+  cards_removeField(state, { field, card_id }) {
+    Vue.delete(state.cards.cards[card_id], field)
   }
 }
 

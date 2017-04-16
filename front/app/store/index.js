@@ -48,6 +48,7 @@ import inbound from './inbound'
 import outbound from './outbound'
 
 import cards from './modules/cards'
+import alerts from './modules/alerts'
 
 export default new Vuex.Store({
   state,
@@ -55,7 +56,8 @@ export default new Vuex.Store({
   getters,
   mutations,
   modules: {
-    cards
+    cards,
+    alerts
   },
   plugins: [outbound, inbound],
   strict: process.env.NODE_ENV !== 'production'
